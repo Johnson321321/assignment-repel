@@ -1,0 +1,47 @@
+ball = PVector(random(20, 680), random(20, 680))
+ballsize = 40
+speed = PVector(0, 0)
+score = 0
+playersize = 40
+
+
+def setup():
+    size(700, 700)
+
+
+def draw():  
+    global ball
+    global ballsize
+    global speed
+    global score
+    background(0)
+    fill(255)
+    ellipse(ball.x, ball.y, ballsize, ballsize)
+    ball -= speed
+    speed *= 0.95
+    playerball = PVector(mouseX, mouseY) 
+    fill(255, 0, 0)
+    ellipse(playerball.x, playerball.y, playersize, playersize)
+    distance = PVector.sub(playerball, ball)
+    a = PVector.fromAngle(distance.heading())
+    if distance.mag() <= playersize*3:
+        speed.add(a)
+    if distance.mag() <= playersize:
+        ball.x = random(20, 680)
+        ball.y = random(20, 680)
+        score += 1    
+    if ball.x >= 680:
+        speed.x *= -1
+    if ball.y >= 680:
+        speed.y *= -1
+    if ball.x <= 20:
+        speed.x = -speed.x
+    if ball.y <= 20:
+        speed.y = -speed.y
+   
+    fill(255)
+    textSize(50)
+    text('''Score: ''' + str(score), 50, 50)
+    
+    
+    
